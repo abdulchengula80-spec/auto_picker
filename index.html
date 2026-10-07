@@ -1,10 +1,577 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Auto Picker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1X2 Possible Outcomes Generator</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: #f8fafc;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .header h1 {
+        margin-bottom: 8px;
+        font-size: 28px;
+    }
+
+    .header p {
+        color: #94a3b8;
+    }
+
+    .control-box {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #475569;
+        border-radius: 10px;
+        background: #0f172a;
+        color: white;
+        font-size: 16px;
+        outline: none;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 12px;
+        padding: 13px;
+        border: none;
+        border-radius: 10px;
+        background: #2563eb;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .stat {
+        background: #1e293b;
+        padding: 18px;
+        border-radius: 14px;
+        text-align: center;
+    }
+
+    .stat h3 {
+        margin: 0 0 8px;
+        color: #94a3b8;
+        font-size: 14px;
+    }
+
+    .stat strong {
+        font-size: 24px;
+        color: #38bdf8;
+    }
+
+    .legend {
+        background: #1e293b;
+        padding: 15px;
+        border-radius: 14px;
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .legend-item {
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+
+    .first {
+        background: #16a34a;
+        color: white;
+    }
+
+    .second {
+        background: #eab308;
+        color: black;
+    }
+
+    .third {
+        background: #dc2626;
+        color: white;
+    }
+
+    .table-wrapper {
+        background: #1e293b;
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    .table-scroll {
+        overflow-x: auto;
+        max-height: 650px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px;
+    }
+
+    th {
+        position: sticky;
+        top: 0;
+        background: #334155;
+        padding: 12px 8px;
+        z-index: 2;
+    }
+
+    td {
+        padding: 9px 6px;
+        text-align: center;
+        border-bottom: 1px solid #334155;
+    }
+
+    .row-number {
+        color: #94a3b8;
+        font-weight: bold;
+    }
+
+    .outcome {
+        padding: 5px 8px;
+        border-radius: 6px;
+        font-weight: bold;
+        display: inline-block;
+        min-width: 48px;
+    }
+
+    .pagination {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        flex-wrap: wrap;
+    }
+
+    .pagination button {
+        width: auto;
+        margin: 0;
+        padding: 10px 18px;
+    }
+
+    #pageInfo {
+        color: #cbd5e1;
+        font-weight: bold;
+    }
+
+    .message {
+        text-align: center;
+        padding: 30px;
+        color: #94a3b8;
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            padding: 12px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+        }
+
+        .stats {
+            grid-template-columns: 1fr;
+        }
+
+        table {
+            font-size: 13px;
+        }
+
+        .outcome {
+            min-width: 40px;
+            padding: 4px;
+        }
+    }
+</style>
 </head>
+
 <body>
-    <h1>Karibu kwenye Auto Picker!</h1>
-    <p>Hii ni website maalumu inayoselect matches na kutengeneza matokeo.</p>
+
+<div class="container">
+
+    <div class="header">
+        <h1>⚽ Possible Outcomes Generator</h1>
+        <p>Generate all possible 1X2 combinations automatically</p>
+    </div>
+
+    <div class="control-box">
+
+        <label for="matchCount">
+            Enter Number of Matches
+        </label>
+
+        <input
+            type="number"
+            id="matchCount"
+            min="1"
+            max="15"
+            placeholder="Example: 10"
+        >
+
+        <button onclick="generateOutcomes()">
+            🚀 Generate Possible Outcomes
+        </button>
+
+    </div>
+
+    <div id="results" style="display:none;">
+
+        <div class="stats">
+
+            <div class="stat">
+                <h3>Number of Matches</h3>
+                <strong id="totalMatches">0</strong>
+            </div>
+
+            <div class="stat">
+                <h3>Possible Outcomes</h3>
+                <strong id="totalOutcomes">0</strong>
+            </div>
+
+        </div>
+
+        <div class="legend">
+
+            <div class="legend-item first">
+                🟢 1st
+            </div>
+
+            <div class="legend-item second">
+                🟡 2nd
+            </div>
+
+            <div class="legend-item third">
+                🔴 3rd
+            </div>
+
+        </div>
+
+        <div class="table-wrapper">
+
+            <div class="table-scroll">
+
+                <table>
+
+                    <thead id="tableHead"></thead>
+
+                    <tbody id="tableBody"></tbody>
+
+                </table>
+
+            </div>
+
+            <div class="pagination">
+
+                <button onclick="previousPage()">
+                    ← Previous
+                </button>
+
+                <span id="pageInfo"></span>
+
+                <button onclick="nextPage()">
+                    Next →
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const outcomes = ["1st", "2nd", "3rd"];
+
+let numberOfMatches = 0;
+let totalCombinations = 0;
+let currentPage = 1;
+
+const rowsPerPage = 100;
+
+function calculatePower(base, exponent) {
+
+    let result = 1;
+
+    for (let i = 0; i < exponent; i++) {
+        result *= base;
+
+        // Prevent impossible huge numbers
+        if (!Number.isSafeInteger(result)) {
+            return Infinity;
+        }
+    }
+
+    return result;
+}
+
+
+function generateOutcomes() {
+
+    const input = document.getElementById("matchCount");
+
+    numberOfMatches = parseInt(input.value);
+
+    if (
+        isNaN(numberOfMatches) ||
+        numberOfMatches < 1 ||
+        numberOfMatches > 15
+    ) {
+
+        alert("Please enter a number between 1 and 15.");
+
+        return;
+    }
+
+    totalCombinations =
+        calculatePower(3, numberOfMatches);
+
+    currentPage = 1;
+
+    document.getElementById("results").style.display = "block";
+
+    document.getElementById("totalMatches").textContent =
+        numberOfMatches.toLocaleString();
+
+    document.getElementById("totalOutcomes").textContent =
+        totalCombinations.toLocaleString();
+
+    createTableHeader();
+
+    renderPage();
+}
+
+
+function createTableHeader() {
+
+    const head = document.getElementById("tableHead");
+
+    head.innerHTML = "";
+
+    const row = document.createElement("tr");
+
+    const numberHeader = document.createElement("th");
+
+    numberHeader.textContent = "#";
+
+    row.appendChild(numberHeader);
+
+    for (
+        let i = 1;
+        i <= numberOfMatches;
+        i++
+    ) {
+
+        const th = document.createElement("th");
+
+        th.textContent = "Match " + i;
+
+        row.appendChild(th);
+    }
+
+    head.appendChild(row);
+}
+
+
+function getCombination(index) {
+
+    const combination = [];
+
+    let value = index;
+
+    for (
+        let i = 0;
+        i < numberOfMatches;
+        i++
+    ) {
+
+        const remainder = value % 3;
+
+        combination.unshift(
+            outcomes[remainder]
+        );
+
+        value = Math.floor(value / 3);
+    }
+
+    return combination;
+}
+
+
+function getOutcomeClass(outcome) {
+
+    if (outcome === "1st") {
+        return "first";
+    }
+
+    if (outcome === "2nd") {
+        return "second";
+    }
+
+    return "third";
+}
+
+
+function renderPage() {
+
+    const body =
+        document.getElementById("tableBody");
+
+    body.innerHTML = "";
+
+    const start =
+        (currentPage - 1) * rowsPerPage;
+
+    const end =
+        Math.min(
+            start + rowsPerPage,
+            totalCombinations
+        );
+
+    for (
+        let index = start;
+        index < end;
+        index++
+    ) {
+
+        const combination =
+            getCombination(index);
+
+        const row =
+            document.createElement("tr");
+
+        const numberCell =
+            document.createElement("td");
+
+        numberCell.className =
+            "row-number";
+
+        numberCell.textContent =
+            (index + 1).toLocaleString();
+
+        row.appendChild(numberCell);
+
+        combination.forEach(outcome => {
+
+            const cell =
+                document.createElement("td");
+
+            const span =
+                document.createElement("span");
+
+            span.className =
+                "outcome " +
+                getOutcomeClass(outcome);
+
+            span.textContent = outcome;
+
+            cell.appendChild(span);
+
+            row.appendChild(cell);
+
+        });
+
+        body.appendChild(row);
+    }
+
+    updatePagination();
+}
+
+
+function updatePagination() {
+
+    const totalPages =
+        Math.ceil(
+            totalCombinations / rowsPerPage
+        );
+
+    document.getElementById("pageInfo").textContent =
+        `Page ${currentPage.toLocaleString()} of ${totalPages.toLocaleString()}`;
+}
+
+
+function nextPage() {
+
+    const totalPages =
+        Math.ceil(
+            totalCombinations / rowsPerPage
+        );
+
+    if (currentPage < totalPages) {
+
+        currentPage++;
+
+        renderPage();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+}
+
+
+function previousPage() {
+
+    if (currentPage > 1) {
+
+        currentPage--;
+
+        renderPage();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+}
+
+</script>
+
 </body>
 </html>
