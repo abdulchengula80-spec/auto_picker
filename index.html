@@ -3,254 +3,351 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1X2 Possible Outcomes Generator</title>
+
+<title>Possible Outcomes Generator</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
 
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #0f172a;
-        color: #f8fafc;
-    }
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: #f8fafc;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    margin-bottom: 8px;
+    font-size: 28px;
+}
+
+.header p {
+    color: #94a3b8;
+}
+
+/* CONTROL BOX */
+
+.control-box {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #475569;
+    border-radius: 10px;
+    background: #0f172a;
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #38bdf8;
+}
+
+button {
+    width: 100%;
+    margin-top: 5px;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+/* STATS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: #1e293b;
+    padding: 18px;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.stat h3 {
+    margin: 0 0 8px;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.stat strong {
+    font-size: 21px;
+    color: #38bdf8;
+    word-break: break-word;
+}
+
+/* CAPITAL */
+
+.capital-box {
+    background: #172554;
+    border: 1px solid #2563eb;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.capital-box h2 {
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+
+.capital-amount {
+    font-size: 28px;
+    font-weight: bold;
+    color: #4ade80;
+    word-break: break-word;
+}
+
+.capital-info {
+    color: #bfdbfe;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+/* LEGEND */
+
+.legend {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.first {
+    background: #16a34a;
+    color: white;
+}
+
+.second {
+    background: #eab308;
+    color: black;
+}
+
+.third {
+    background: #dc2626;
+    color: white;
+}
+
+/* TABLE */
+
+.table-wrapper {
+    background: #1e293b;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.table-scroll {
+    overflow-x: auto;
+    max-height: 650px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background: #334155;
+    padding: 12px 8px;
+    z-index: 2;
+}
+
+td {
+    padding: 9px 6px;
+    text-align: center;
+    border-bottom: 1px solid #334155;
+}
+
+.row-number {
+    color: #94a3b8;
+    font-weight: bold;
+}
+
+.outcome {
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+    display: inline-block;
+    min-width: 48px;
+}
+
+/* PAGINATION */
+
+.pagination {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.pagination button {
+    width: auto;
+    margin: 0;
+    padding: 10px 18px;
+}
+
+#pageInfo {
+    color: #cbd5e1;
+    font-weight: bold;
+}
+
+/* WARNING */
+
+.warning {
+    display: none;
+    background: #451a03;
+    border: 1px solid #f59e0b;
+    color: #fde68a;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
 
     .container {
-        max-width: 1100px;
-        margin: auto;
-        padding: 20px;
-    }
-
-    .header {
-        text-align: center;
-        margin-bottom: 25px;
+        padding: 12px;
     }
 
     .header h1 {
-        margin-bottom: 8px;
-        font-size: 28px;
-    }
-
-    .header p {
-        color: #94a3b8;
-    }
-
-    .control-box {
-        background: #1e293b;
-        padding: 20px;
-        border-radius: 15px;
-        margin-bottom: 20px;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: bold;
-    }
-
-    input {
-        width: 100%;
-        padding: 13px;
-        border: 1px solid #475569;
-        border-radius: 10px;
-        background: #0f172a;
-        color: white;
-        font-size: 16px;
-        outline: none;
-    }
-
-    button {
-        width: 100%;
-        margin-top: 12px;
-        padding: 13px;
-        border: none;
-        border-radius: 10px;
-        background: #2563eb;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background: #1d4ed8;
+        font-size: 22px;
     }
 
     .stats {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        margin-bottom: 20px;
+        grid-template-columns: 1fr;
     }
 
-    .stat {
-        background: #1e293b;
-        padding: 18px;
-        border-radius: 14px;
-        text-align: center;
-    }
-
-    .stat h3 {
-        margin: 0 0 8px;
-        color: #94a3b8;
-        font-size: 14px;
-    }
-
-    .stat strong {
-        font-size: 24px;
-        color: #38bdf8;
-    }
-
-    .legend {
-        background: #1e293b;
-        padding: 15px;
-        border-radius: 14px;
-        margin-bottom: 20px;
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-
-    .legend-item {
-        padding: 8px 12px;
-        border-radius: 8px;
-        font-weight: bold;
-    }
-
-    .first {
-        background: #16a34a;
-        color: white;
-    }
-
-    .second {
-        background: #eab308;
-        color: black;
-    }
-
-    .third {
-        background: #dc2626;
-        color: white;
-    }
-
-    .table-wrapper {
-        background: #1e293b;
-        border-radius: 14px;
-        overflow: hidden;
-    }
-
-    .table-scroll {
-        overflow-x: auto;
-        max-height: 650px;
+    .capital-amount {
+        font-size: 22px;
     }
 
     table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 600px;
-    }
-
-    th {
-        position: sticky;
-        top: 0;
-        background: #334155;
-        padding: 12px 8px;
-        z-index: 2;
-    }
-
-    td {
-        padding: 9px 6px;
-        text-align: center;
-        border-bottom: 1px solid #334155;
-    }
-
-    .row-number {
-        color: #94a3b8;
-        font-weight: bold;
+        font-size: 13px;
     }
 
     .outcome {
-        padding: 5px 8px;
-        border-radius: 6px;
-        font-weight: bold;
-        display: inline-block;
-        min-width: 48px;
+        min-width: 40px;
+        padding: 4px;
     }
+}
 
-    .pagination {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        flex-wrap: wrap;
-    }
-
-    .pagination button {
-        width: auto;
-        margin: 0;
-        padding: 10px 18px;
-    }
-
-    #pageInfo {
-        color: #cbd5e1;
-        font-weight: bold;
-    }
-
-    .message {
-        text-align: center;
-        padding: 30px;
-        color: #94a3b8;
-    }
-
-    @media (max-width: 600px) {
-        .container {
-            padding: 12px;
-        }
-
-        .header h1 {
-            font-size: 22px;
-        }
-
-        .stats {
-            grid-template-columns: 1fr;
-        }
-
-        table {
-            font-size: 13px;
-        }
-
-        .outcome {
-            min-width: 40px;
-            padding: 4px;
-        }
-    }
 </style>
 </head>
+
 
 <body>
 
 <div class="container">
 
     <div class="header">
+
         <h1>⚽ Possible Outcomes Generator</h1>
-        <p>Generate all possible 1X2 combinations automatically</p>
+
+        <p>
+            Generate all possible combinations automatically
+        </p>
+
     </div>
+
+
+    <!-- CONTROLS -->
 
     <div class="control-box">
 
-        <label for="matchCount">
-            Enter Number of Matches
-        </label>
+        <div class="input-group">
 
-        <input
-            type="number"
-            id="matchCount"
-            min="1"
-            max="15"
-            placeholder="Example: 10"
-        >
+            <label for="matchCount">
+                Number of Matches
+            </label>
+
+            <input
+                type="number"
+                id="matchCount"
+                min="1"
+                max="40"
+                placeholder="Example: 10"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label for="stakeAmount">
+                Stake Amount Per Pick (TSh)
+            </label>
+
+            <input
+                type="number"
+                id="stakeAmount"
+                min="0"
+                step="any"
+                placeholder="Example: 100"
+                oninput="calculateCapital()"
+            >
+
+        </div>
+
 
         <button onclick="generateOutcomes()">
             🚀 Generate Possible Outcomes
@@ -258,21 +355,82 @@
 
     </div>
 
+
+    <!-- WARNING -->
+
+    <div id="warning" class="warning"></div>
+
+
+    <!-- RESULTS -->
+
     <div id="results" style="display:none;">
+
+
+        <!-- STATS -->
 
         <div class="stats">
 
             <div class="stat">
-                <h3>Number of Matches</h3>
-                <strong id="totalMatches">0</strong>
+
+                <h3>Matches</h3>
+
+                <strong id="totalMatches">
+                    0
+                </strong>
+
             </div>
 
+
             <div class="stat">
+
                 <h3>Possible Outcomes</h3>
-                <strong id="totalOutcomes">0</strong>
+
+                <strong id="totalOutcomes">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat">
+
+                <h3>Stake / Pick</h3>
+
+                <strong id="stakeDisplay">
+                    TSh 0
+                </strong>
+
             </div>
 
         </div>
+
+
+        <!-- CAPITAL -->
+
+        <div class="capital-box">
+
+            <h2>
+                💰 Total Capital Required
+            </h2>
+
+            <div
+                class="capital-amount"
+                id="capitalDisplay"
+            >
+                TSh 0
+            </div>
+
+            <div
+                class="capital-info"
+                id="capitalInfo"
+            >
+                Enter your stake amount above.
+            </div>
+
+        </div>
+
+
+        <!-- LEGEND -->
 
         <div class="legend">
 
@@ -290,6 +448,9 @@
 
         </div>
 
+
+        <!-- TABLE -->
+
         <div class="table-wrapper">
 
             <div class="table-scroll">
@@ -304,13 +465,18 @@
 
             </div>
 
+
+            <!-- PAGINATION -->
+
             <div class="pagination">
 
                 <button onclick="previousPage()">
                     ← Previous
                 </button>
 
-                <span id="pageInfo"></span>
+                <span id="pageInfo">
+                    Page 1
+                </span>
 
                 <button onclick="nextPage()">
                     Next →
@@ -324,82 +490,329 @@
 
 </div>
 
+
 <script>
+
+/*
+=========================================================
+POSSIBLE OUTCOMES GENERATOR
+Supports up to 40 matches
+Uses BigInt for very large calculations
+=========================================================
+*/
+
 
 const outcomes = ["1st", "2nd", "3rd"];
 
 let numberOfMatches = 0;
-let totalCombinations = 0;
+
+let totalCombinations = 0n;
+
 let currentPage = 1;
 
 const rowsPerPage = 100;
 
-function calculatePower(base, exponent) {
 
-    let result = 1;
+/*
+=========================================================
+FORMAT BIG NUMBERS
+=========================================================
+*/
 
-    for (let i = 0; i < exponent; i++) {
-        result *= base;
+function formatBigInt(value) {
 
-        // Prevent impossible huge numbers
-        if (!Number.isSafeInteger(result)) {
-            return Infinity;
-        }
-    }
+    return value.toLocaleString("en-US");
 
-    return result;
 }
 
 
+/*
+=========================================================
+FORMAT TSH
+=========================================================
+*/
+
+function formatTsh(value) {
+
+    return "TSh " + value.toLocaleString("en-US");
+
+}
+
+
+/*
+=========================================================
+CALCULATE 3^N
+=========================================================
+*/
+
+function calculatePowerBigInt(base, exponent) {
+
+    let result = 1n;
+
+    for (let i = 0; i < exponent; i++) {
+
+        result *= BigInt(base);
+
+    }
+
+    return result;
+
+}
+
+
+/*
+=========================================================
+GENERATE
+=========================================================
+*/
+
 function generateOutcomes() {
 
-    const input = document.getElementById("matchCount");
+    const matchInput =
+        document.getElementById("matchCount");
 
-    numberOfMatches = parseInt(input.value);
+    numberOfMatches =
+        parseInt(matchInput.value);
+
+
+    /*
+    VALIDATE MATCHES
+    */
 
     if (
         isNaN(numberOfMatches) ||
         numberOfMatches < 1 ||
-        numberOfMatches > 15
+        numberOfMatches > 40
     ) {
 
-        alert("Please enter a number between 1 and 15.");
+        showWarning(
+            "Please enter the number of matches between 1 and 40."
+        );
 
         return;
+
     }
 
+
+    hideWarning();
+
+
+    /*
+    CALCULATE TOTAL OUTCOMES
+    */
+
     totalCombinations =
-        calculatePower(3, numberOfMatches);
+        calculatePowerBigInt(
+            3,
+            numberOfMatches
+        );
+
 
     currentPage = 1;
 
-    document.getElementById("results").style.display = "block";
 
-    document.getElementById("totalMatches").textContent =
+    /*
+    SHOW RESULTS
+    */
+
+    document.getElementById("results")
+        .style.display = "block";
+
+
+    document.getElementById("totalMatches")
+        .textContent =
         numberOfMatches.toLocaleString();
 
-    document.getElementById("totalOutcomes").textContent =
-        totalCombinations.toLocaleString();
+
+    document.getElementById("totalOutcomes")
+        .textContent =
+        formatBigInt(totalCombinations);
+
+
+    /*
+    CREATE TABLE
+    */
 
     createTableHeader();
 
+
+    /*
+    CALCULATE CAPITAL
+    */
+
+    calculateCapital();
+
+
+    /*
+    DISPLAY FIRST PAGE
+    */
+
     renderPage();
+
 }
 
 
+/*
+=========================================================
+CALCULATE CAPITAL
+=========================================================
+*/
+
+function calculateCapital() {
+
+    if (numberOfMatches < 1) {
+
+        return;
+
+    }
+
+
+    const stakeInput =
+        document.getElementById("stakeAmount");
+
+
+    let stakeValue =
+        stakeInput.value.trim();
+
+
+    /*
+    NO STAKE ENTERED
+    */
+
+    if (
+        stakeValue === "" ||
+        Number(stakeValue) < 0
+    ) {
+
+        document.getElementById("stakeDisplay")
+            .textContent =
+            "TSh 0";
+
+        document.getElementById("capitalDisplay")
+            .textContent =
+            "TSh 0";
+
+        document.getElementById("capitalInfo")
+            .textContent =
+            "Enter your stake amount above.";
+
+        return;
+
+    }
+
+
+    /*
+    CONVERT STAKE TO BIGINT
+    */
+
+    const stakeNumber =
+        Number(stakeValue);
+
+
+    if (!Number.isFinite(stakeNumber)) {
+
+        return;
+
+    }
+
+
+    /*
+    SUPPORT DECIMAL STAKES
+    */
+
+    const decimalPlaces =
+        (stakeValue.split(".")[1] || "").length;
+
+
+    const multiplier =
+        10 ** Math.min(decimalPlaces, 6);
+
+
+    const integerStake =
+        BigInt(
+            Math.round(
+                stakeNumber * multiplier
+            )
+        );
+
+
+    /*
+    TOTAL CAPITAL
+    */
+
+    const totalCapital =
+        totalCombinations *
+        integerStake;
+
+
+    const displayedCapital =
+        Number(totalCapital) /
+        multiplier;
+
+
+    /*
+    DISPLAY
+    */
+
+    document.getElementById("stakeDisplay")
+        .textContent =
+        formatTsh(stakeNumber);
+
+
+    document.getElementById("capitalDisplay")
+        .textContent =
+        "TSh " +
+        displayedCapital.toLocaleString(
+            "en-US",
+            {
+                maximumFractionDigits: 6
+            }
+        );
+
+
+    document.getElementById("capitalInfo")
+        .textContent =
+        formatBigInt(totalCombinations) +
+        " possible picks × " +
+        formatTsh(stakeNumber) +
+        " per pick";
+
+}
+
+
+/*
+=========================================================
+CREATE TABLE HEADER
+=========================================================
+*/
+
 function createTableHeader() {
 
-    const head = document.getElementById("tableHead");
+    const head =
+        document.getElementById("tableHead");
 
     head.innerHTML = "";
 
-    const row = document.createElement("tr");
 
-    const numberHeader = document.createElement("th");
+    const row =
+        document.createElement("tr");
+
+
+    /*
+    NUMBER COLUMN
+    */
+
+    const numberHeader =
+        document.createElement("th");
 
     numberHeader.textContent = "#";
 
     row.appendChild(numberHeader);
+
+
+    /*
+    MATCH COLUMNS
+    */
 
     for (
         let i = 1;
@@ -407,22 +820,34 @@ function createTableHeader() {
         i++
     ) {
 
-        const th = document.createElement("th");
+        const th =
+            document.createElement("th");
 
-        th.textContent = "Match " + i;
+        th.textContent =
+            "Match " + i;
 
         row.appendChild(th);
+
     }
 
+
     head.appendChild(row);
+
 }
 
+
+/*
+=========================================================
+GET COMBINATION
+=========================================================
+*/
 
 function getCombination(index) {
 
     const combination = [];
 
-    let value = index;
+    let value = BigInt(index);
+
 
     for (
         let i = 0;
@@ -430,32 +855,60 @@ function getCombination(index) {
         i++
     ) {
 
-        const remainder = value % 3;
+        const remainder =
+            value % 3n;
+
 
         combination.unshift(
-            outcomes[remainder]
+            outcomes[
+                Number(remainder)
+            ]
         );
 
-        value = Math.floor(value / 3);
+
+        value =
+            value / 3n;
+
     }
 
+
     return combination;
+
 }
 
+
+/*
+=========================================================
+GET COLOR
+=========================================================
+*/
 
 function getOutcomeClass(outcome) {
 
     if (outcome === "1st") {
+
         return "first";
+
     }
+
 
     if (outcome === "2nd") {
+
         return "second";
+
     }
 
+
     return "third";
+
 }
 
+
+/*
+=========================================================
+RENDER CURRENT PAGE
+=========================================================
+*/
 
 function renderPage() {
 
@@ -464,26 +917,55 @@ function renderPage() {
 
     body.innerHTML = "";
 
-    const start =
-        (currentPage - 1) * rowsPerPage;
 
-    const end =
+    /*
+    BIGINT PAGE CALCULATION
+    */
+
+    const start =
+        BigInt(currentPage - 1) *
+        BigInt(rowsPerPage);
+
+
+    const remaining =
+        totalCombinations -
+        start;
+
+
+    let numberOfRows =
         Math.min(
-            start + rowsPerPage,
-            totalCombinations
+            rowsPerPage,
+            Number(
+                remaining > BigInt(rowsPerPage)
+                ? BigInt(rowsPerPage)
+                : remaining
+            )
         );
 
+
+    /*
+    GENERATE ONLY 100 ROWS
+    */
+
     for (
-        let index = start;
-        index < end;
-        index++
+        let i = 0;
+        i < numberOfRows;
+        i++
     ) {
 
         const combination =
-            getCombination(index);
+            getCombination(
+                start + BigInt(i)
+            );
+
 
         const row =
             document.createElement("tr");
+
+
+        /*
+        ROW NUMBER
+        */
 
         const numberCell =
             document.createElement("td");
@@ -491,58 +973,114 @@ function renderPage() {
         numberCell.className =
             "row-number";
 
+
         numberCell.textContent =
-            (index + 1).toLocaleString();
+            formatBigInt(
+                start +
+                BigInt(i) +
+                1n
+            );
+
 
         row.appendChild(numberCell);
 
-        combination.forEach(outcome => {
 
-            const cell =
-                document.createElement("td");
+        /*
+        OUTCOMES
+        */
 
-            const span =
-                document.createElement("span");
+        combination.forEach(
+            outcome => {
 
-            span.className =
-                "outcome " +
-                getOutcomeClass(outcome);
+                const cell =
+                    document.createElement("td");
 
-            span.textContent = outcome;
 
-            cell.appendChild(span);
+                const span =
+                    document.createElement("span");
 
-            row.appendChild(cell);
 
-        });
+                span.className =
+                    "outcome " +
+                    getOutcomeClass(outcome);
+
+
+                span.textContent =
+                    outcome;
+
+
+                cell.appendChild(span);
+
+                row.appendChild(cell);
+
+            }
+        );
+
 
         body.appendChild(row);
+
     }
 
+
     updatePagination();
+
 }
 
+
+/*
+=========================================================
+UPDATE PAGINATION
+=========================================================
+*/
 
 function updatePagination() {
 
-    const totalPages =
-        Math.ceil(
-            totalCombinations / rowsPerPage
-        );
+    const rows =
+        BigInt(rowsPerPage);
 
-    document.getElementById("pageInfo").textContent =
-        `Page ${currentPage.toLocaleString()} of ${totalPages.toLocaleString()}`;
+
+    const totalPages =
+        (
+            totalCombinations +
+            rows -
+            1n
+        ) / rows;
+
+
+    document.getElementById("pageInfo")
+        .textContent =
+        "Page " +
+        currentPage.toLocaleString() +
+        " of " +
+        formatBigInt(totalPages);
+
 }
 
 
+/*
+=========================================================
+NEXT PAGE
+=========================================================
+*/
+
 function nextPage() {
 
-    const totalPages =
-        Math.ceil(
-            totalCombinations / rowsPerPage
-        );
+    const rows =
+        BigInt(rowsPerPage);
 
-    if (currentPage < totalPages) {
+
+    const totalPages =
+        (
+            totalCombinations +
+            rows -
+            1n
+        ) / rows;
+
+
+    if (
+        BigInt(currentPage) <
+        totalPages
+    ) {
 
         currentPage++;
 
@@ -552,9 +1090,17 @@ function nextPage() {
             top: 0,
             behavior: "smooth"
         });
+
     }
+
 }
 
+
+/*
+=========================================================
+PREVIOUS PAGE
+=========================================================
+*/
 
 function previousPage() {
 
@@ -568,10 +1114,107 @@ function previousPage() {
             top: 0,
             behavior: "smooth"
         });
+
     }
+
 }
+
+
+/*
+=========================================================
+WARNING
+=========================================================
+*/
+
+function showWarning(message) {
+
+    const warning =
+        document.getElementById("warning");
+
+    warning.textContent =
+        "⚠️ " + message;
+
+    warning.style.display =
+        "block";
+
+}
+
+
+function hideWarning() {
+
+    document.getElementById("warning")
+        .style.display =
+        "none";
+
+}
+
+
+/*
+=========================================================
+ENTER KEY
+=========================================================
+*/
+
+document.getElementById("matchCount")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                generateOutcomes();
+
+            }
+
+        }
+    );
+
+
+document.getElementById("stakeAmount")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                calculateCapital();
+
+            }
+
+        }
+    );
 
 </script>
 
 </body>
 </html>
+
+Mfano wa itakavyofanya kazi
+
+Ukiweka:
+
+Matches: "10"
+Stake per pick: "TSh 1"
+
+Itatoa:
+
+Possible outcomes: "59,049"
+Total capital: "TSh 59,049"
+
+Ukiweka:
+
+Matches: "15"
+Stake: "TSh 1"
+
+Itatoa:
+
+Possible outcomes: "14,348,907"
+Capital: "TSh 14,348,907"
+
+Na ukiweka 40 matches:
+
+Possible outcomes: "12,157,665,459,056,928,801"
+
+Hapa kuna jambo muhimu: kwa mechi 40, combinations ni zaidi ya 12 quintillion, kwa hiyo website haiwezi kuwaonyesha wote kwa wakati mmoja. Code hii imeundwa kuonyesha 100 kwa page huku ikiendelea kuhesabu jumla yote bila kujaribu kutengeneza rows zote—hivyo haitumii memory nyingi na ni salama zaidi kwenye simu.
+
+Kama unataka, hatua inayofuata naweza pia kukiongezea search ya combination number, jump-to-page, download CSV/Excel, na sehemu ya kuingiza odds ili ihesabu potential payout.
